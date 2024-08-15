@@ -61,6 +61,18 @@ async function newOrder(symbol, quantity, side) {
         .digest("hex");
 
     order.signature = signature;
+
+    try {
+        const { data } = await axios.post(
+            API_URL + "/api/v3/order",
+            new URLSearchParams(order).toString(),
+            { headers: {"X-MBX-APIKEY": API_KEY} }
+        )
+
+        console.log(data);
+    } catch(err) {
+        console.error(err.response.data);
+    }
 }
 
 setInterval(start, 3000);
