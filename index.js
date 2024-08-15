@@ -1,4 +1,12 @@
-const axios = require('axios');
+import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+if (!process.env.API_KEY || !process.env.SECRET_KEY) {
+    console.error('Variáveis de ambiente não definidas corretamente');
+    process.exit(1);
+}
 
 const SYMBOL = "BTCUSDT";
 const BUY_PRICE = 34160;
