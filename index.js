@@ -8,6 +8,12 @@ const API_URL = "https://testnet.binance.vision"; //https://api.binance.com
 
 let isOpened = false;
 
+function calcSMA(data) {
+    const closes = data.map(candle => parseFloat(candle[4]));
+    const sum = closes.reduce((a,b) => a + b);
+    return sum / data.length;
+}
+
 async function start() {
     const { data } = await axios.get(API_URL + "/api/v3/klines?limit=21&interval=15m&symbol=" + SYMBOL);
     const candle = data[data.length -1];
