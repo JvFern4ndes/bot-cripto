@@ -22,17 +22,15 @@ async function start() {
     console.clear();
     console.log("Price:" + price);
 
-    const sma21 = calcSMA(data);
-    const sma13 = calcSMA(data.slice(8));
-    console.log("SMA (13): " + sma13)
-    console.log("SMA (21): " + sma21);
+    const sma = calcSMA(data);
+    console.log("SMA: " + sma);
     console.log("Is Opened? " + isOpened);
 
-    if(sma13 > sma21 && isOpened === false) {
+    if(price <= (sma * 0.9) && isOpened === false) {
         console.log("comprar");
         isOpened = true;
     }
-    else if(sma13 < sma21 && isOpened === true) {
+    else if(price >= (sma * 1.1) && isOpened === true) {
         console.log("vender");
         isOpened = false;
     }
