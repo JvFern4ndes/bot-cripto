@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
@@ -8,10 +9,13 @@ if (!process.env.API_KEY || !process.env.SECRET_KEY) {
     process.exit(1);
 }
 
+const API_KEY = process.env.API_KEY;
+const SECRET_KEY = process.env.SECRET_KEY;
+
 const SYMBOL = "BTCUSDT";
 const BUY_PRICE = 34160;
 const SELL_PRICE = 34501;
-
+const QUANTITY = "0.001";
 const API_URL = "https://testnet.binance.vision"; //https://api.binance.com
 
 let isOpened = false;
@@ -44,6 +48,19 @@ async function start() {
     }
     else
         console.log("aguardar");
+}
+
+async function newOrder(symbol, quantity, side) {
+    const order = { symbol, quantity, side };
+    order.type = "MARKET";
+    order.timestamp = Date.now();
+
+    const signature = crypto
+        .createHmac("sha256", SECRET_KEY)
+        .update(new URLSearchParams(order).toString())
+        .digest("hex");
+
+    order.signature = signature;
 }
 
 setInterval(start, 3000);

@@ -4,3 +4,4 @@ Itens que serão documentados:
 2 - Instalação do axios para acessar a API das corretoras;
 3 - Criação da função start
 4 - Criação da função calcSMA
+5 - Adição das API e SECRET KEY's
